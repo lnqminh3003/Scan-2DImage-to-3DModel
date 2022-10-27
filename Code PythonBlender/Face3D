@@ -1,0 +1,29 @@
+import bpy
+
+import sys
+packages_path=r"c:\users\le_nguyen_quang_minh\appdata\local\programs\python\python310\lib\site-packages"
+sys.path.insert(0, packages_path )
+
+from PIL import Image
+
+from mathutils import Vector
+
+bpy.ops.object.select_all(action='DESELECT')
+for o in bpy.context.scene.objects:
+    if o.name == "Face":
+        bpy.data.objects['Face'].select_set(True)
+        bpy.ops.object.delete()
+
+
+# Import FBX
+bpy.ops.import_scene.fbx( filepath = "D:\Works\Face3D_Unity\Model\Face.fbx" )
+face_obj =  bpy.data.objects['FBHead']
+face_obj.name = 'Face'
+face_obj.scale = Vector((30,30,30))
+
+face_img =  Image.open("D:\Works\Face3D_Unity\Image\MinhFace.jpg").convert('L')
+max_size = (1920,1920)
+face_img.thumbnail(max_size)
+face_img.show()
+
+
